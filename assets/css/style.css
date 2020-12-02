@@ -2,3 +2,31 @@
     padding:0px;
     margin:0px;
 }
+nav{
+    background-color: #333;
+    color:#fcfcfc;
+}
+nav a{
+    color:#fcfcfc;
+}
+nav a:hover{
+    color:#fcfcfc;
+}
+main{
+    min-height: 90vh;
+}
+footer{
+    background-color:#333;
+    color:#fcfcfc;
+}
+footer a{
+    color:#fcfcfc;
+    border:1px solid #333;
+    width:30px;
+    padding:5px 10px;
+    transition:.3s ease;
+}
+footer a:hover{
+    color:#fcfcfc;
+    border:1px solid #fcfcfc;
+}
