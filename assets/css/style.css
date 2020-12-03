@@ -2,31 +2,216 @@
     padding:0px;
     margin:0px;
 }
+@import url('https://fonts.googleapis.com/css2?family=Martel+Sans&family=Padauk&display=swap');
+body{
+    background-color:#F2F1EF!important;
+}
+header{
+    background-image: url('../img/home3.jpg');
+    background-position: top;
+    height:800px;
+}
+/* .navbar{
+    padding-top:0px!important;
+} */
 nav{
-    background-color: #333;
-    color:#fcfcfc;
+    color:#fcfcfc; 
+    text-transform: uppercase;  
+    font-weight: 500;
+    
+}
+nav .menuIco{
+    border:1px solid transparent;
+    padding:5px;
+    transition:.3s ease;
+}
+nav .menuIco:hover{
+    border:1px solid #fcfcfc;
+    border-radius: 50px;
 }
 nav a{
     color:#fcfcfc;
+    /* font-size:3.5em; */
+    width:50%;
+    transition:1s ease;
+    padding-left: 0px;
 }
 nav a:hover{
     color:#fcfcfc;
+    
+    /* text-align: center; */
+    
+}
+
+@keyframes navHoverAnimacija{
+    from{
+        padding-left: 10px;
+    }
+    to{
+        padding-left: 30px;
+    }
+}
+@keyframes fadeUp{
+    from{
+        background-color: transparent;
+    }
+    to{
+        background-color: rgba(0,0,0,0.85);
+    }
+}
+@keyframes fadeDown{
+    from{
+        background-color: rgba(0,0,0,0.85);
+        display:block;
+    }
+    to{
+        background-color: transparent;
+        display:none;
+    }
+}
+nav .openMenu{
+    display:none;
+    position: fixed;
+    top:0px;
+    left:0px;
+    animation:fadeUp .5s forwards;
+    height:100vh;
+    width:100vw;
+    z-index:101;
+    padding-top:20vh;
+    font-size:3em;
+    transition: .3s ease;
+}
+nav .closeMenu{
+    animation:fadeDown 1s ease;
+}
+nav .openMenu .escapeNav{
+    padding:10px;
+    border:1px solid transparent;
+    
+}
+nav .openMenu a:hover{
+    animation: navHoverAnimacija .3s forwards;
+}
+
+nav .openMenu .escapeNav:hover{
+    border:1px solid #fcfcfc;
+    border-radius: 50px;
+}
+nav .openMenu a:first-child{
+    margin-top:15vh;
+}
+nav .openMenu a:nth-of-type(2){
+    padding:50px 0px;
+}
+nav .openMenu a:link{
+    padding-left:30px;
+}
+#naslov{
+    margin:150px auto;
+    color:#fcfcfc;
+}
+
+#naslov article h1{
+    font-size:4em;
+    font-family: 'Padauk', sans-serif;
+}
+#naslov article p{
+    font-size:1.15em;
+    font-family: 'Martel Sans', sans-serif;
+    width:90%;
+    margin:0px auto;
+}
+#naslov article form{
+    background-color: #fff;
+    width:65%;
+    border-radius: 5px!important;
+    position:relative;
+}
+#naslov article form .ispisGradova{
+    width:75%;
+    height:100px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    
+    position:absolute;
+    left:0px;
+    top:35px;
+    background-color: #fff;
+    border-radius: 0px 0px 5px 5px;
+    display:none;
+}
+#naslov article form .ispisGradova::-webkit-scrollbar {
+    display: none;
+}
+
+#naslov article form input{
+    border:0px!important;
+    border-radius: 5px!important;
+    width:75%!important;
+}
+#naslov article form input:last-of-type{
+    border-radius:0px 5px 5px 0px!important;
+    width:25%!important;
 }
 main{
-    min-height: 90vh;
+    min-height: 100vh;
 }
 footer{
-    background-color:#333;
+    background-color:#222;
     color:#fcfcfc;
+    position: relative;
 }
-footer a{
+footer #log .log-form form{
+    margin:0px auto;
+    width: 50%;
+   
+}
+footer .social a{
     color:#fcfcfc;
-    border:1px solid #333;
-    width:30px;
+    border:1px solid #222;
     padding:5px 10px;
     transition:.3s ease;
 }
-footer a:hover{
+footer .social a:hover{
     color:#fcfcfc;
     border:1px solid #fcfcfc;
+    border-radius: 50px;
+}
+
+#createAccForm{
+    display:none;
+    /* background-color: rgba(255,255,255,.35); */
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    height:100vh;
+    width:100vw;
+    z-index: 100;
+    animation:fadeUp .5s forwards;
+}
+.closeForm{
+    animation:fadeDown 1s ease!important;
+}
+.logForm{
+   margin-top:100px;
+    background-color: #fff;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    padding:30px;
+    color:#333;
+    border-radius: 10px;
+}
+.escape{
+    padding:5px;
+    border:1px solid #fff;
+    transition:.3s ease;
+}
+.escape:hover{
+    border:1px solid #333;
+    border-radius:50px;
+    
 }
