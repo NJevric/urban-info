@@ -147,14 +147,13 @@ datalist{
     height:120px;
     overflow-x: hidden;
     overflow-y: scroll;
-    
     position:absolute;
     left:0px;
     top:45px;
     background-color: #fff;
     color:#333;
     border-radius: 0px 0px 5px 5px;
-    display:none;
+    visibility:hidden;
     transition:.3s ease;
 }
 #naslov article form .ispisGradova .grad{

@@ -33,59 +33,80 @@ let nav = () => {
     
 }
 let searchCity = () => {
-    
-    document.querySelector('#search').addEventListener('keyup',function(){
-        let vrednost = document.querySelector('#search').value;
-        document.querySelector('.ispisGradova').style.display='block';
 
-        $.ajax({
-            url: `https://api.teleport.org/api/cities/?search=${vrednost}`,
-            method: "get",
-            dataType: "json",
-            success: function (data) {
+    try{
+        document.querySelector('#search').addEventListener('keyup',function(){
 
-                duzinaNiza = data._embedded["city:search-results"].length;
-                let html = '';
-                for(let i=0;i<duzinaNiza;i++){
 
-                    let vrednost = data._embedded["city:search-results"][i].matching_full_name;
-                    html+=`<p class="grad">${vrednost}</p>`;   
-
-                }
-                
-                document.querySelector('.ispisGradova').innerHTML=html;
-                
-                if(duzinaNiza<1){
-                    document.querySelector('.ispisGradova').style.display='none';
-                }
-                if(duzinaNiza<2){
-                    document.querySelector('.ispisGradova').style.height='45px';
-                }
-                if(duzinaNiza>1 && duzinaNiza<3){
-                    document.querySelector('.ispisGradova').style.height='90px';
-                }
-
-                // let gradovi = document.querySelector('.grad');
-                // console.log(gradovi);
-                // console.log(gradovi);
-                // gradovi.forEach(i => {
-                //     console.log(i);
-                // })
-                
+            let vrednost = document.querySelector('#search').value;
+            document.querySelector('.ispisGradova').style.visibility='visible';
             
-                
-            },
-            error:function(xhr){
-                console.log(xhr);
-            } 
+            $.ajax({
+                url: `https://api.teleport.org/api/cities/?search=${vrednost}`,
+                method: "get",
+                dataType: "json",
+                success: function (data) {
+    
+                    ispisListe(data);
+                    klikNaGrad();
+                   
+                    
+                   
+                },
+                error:function(xhr){
+                    console.log(xhr);
+                } 
+            });
+            
+            let ispisListe = (arg) => {
+                brEl = arg._embedded["city:search-results"].length;
+                let html = '';
+    
+                for(let i=0;i<brEl;i++){
+                    let vrednost = arg._embedded["city:search-results"][i].matching_full_name;
+                    html+=`<p class="grad">${vrednost}</p>`;   
+                }
+                document.querySelector('.ispisGradova').innerHTML=html;
+    
+                let stilPrikazGradova = () => {
+                    if(brEl<1){
+                        document.querySelector('.ispisGradova').style.display='none';
+                    }
+                    if(brEl<2){
+                        document.querySelector('.ispisGradova').style.height='45px';
+                    }
+                    if(brEl>1 && brEl<3){
+                        document.querySelector('.ispisGradova').style.height='90px';
+                    }
+                }
+                stilPrikazGradova();
+            }
+            let klikNaGrad = () => {
+                var myEl = document.getElementsByClassName('grad');
+                for(let i=0;i<myEl.length;i++){
+                   myEl[i].addEventListener('click',function(){
+                        document.querySelector('#search').value=myEl[i].innerHTML;
+                        setTimeout(()=>{
+                            document.querySelector('.ispisGradova').style.visibility='hidden';
+                        },100);
+                    });
+                }
+            }
+            
         });
-
-    });
-    document.querySelector('#search').addEventListener('blur',function(){
-        document.querySelector('.ispisGradova').style.display='none';
-    })
+    }
+    catch(err){
+        console.log(err);
+    }
+    try{
+        document.querySelector('#search').addEventListener('blur',function(){
+            document.querySelector('.ispisGradova').style.visibility='hidden';
+        });
+    }
+    catch(err){
+        console.log(err);
+    }
 }
-
 
 let SignUpForm = () => {
     let openSignForm = () => {
