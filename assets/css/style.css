@@ -138,18 +138,32 @@ nav .openMenu a:link{
     border-radius: 5px!important;
     position:relative;
 }
-#naslov article form .ispisGradova{
+datalist{
+    height:150px;
+    overflow-y: scroll;
+}
+ #naslov article form .ispisGradova{
     width:75%;
-    height:100px;
+    height:120px;
     overflow-x: hidden;
     overflow-y: scroll;
     
     position:absolute;
     left:0px;
-    top:35px;
+    top:45px;
     background-color: #fff;
+    color:#333;
     border-radius: 0px 0px 5px 5px;
     display:none;
+    transition:.3s ease;
+}
+#naslov article form .ispisGradova .grad{
+    width:100%;
+    padding:5px;
+} 
+ #naslov article form .ispisGradova .grad:hover{
+    background-color:#0275d8;
+    color:#fcfcfc;
 }
 #naslov article form .ispisGradova::-webkit-scrollbar {
     display: none;

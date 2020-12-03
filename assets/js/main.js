@@ -33,18 +33,7 @@ let nav = () => {
     
 }
 let searchCity = () => {
-    // let prom="Donji Milanovac"
-    // $.ajax({
-    //     url: `https://api.teleport.org/api/`,
-    //     method: "get",
-    //     dataType: "json",
-    //     success: function (data) {
-    //         console.log(data._links);
-    //     },
-    //     error:function(xhr){
-    //         console.log(xhr);
-    //     } 
-    // });
+    
     document.querySelector('#search').addEventListener('keyup',function(){
         let vrednost = document.querySelector('#search').value;
         document.querySelector('.ispisGradova').style.display='block';
@@ -54,9 +43,37 @@ let searchCity = () => {
             method: "get",
             dataType: "json",
             success: function (data) {
+
+                duzinaNiza = data._embedded["city:search-results"].length;
+                let html = '';
+                for(let i=0;i<duzinaNiza;i++){
+
+                    let vrednost = data._embedded["city:search-results"][i].matching_full_name;
+                    html+=`<p class="grad">${vrednost}</p>`;   
+
+                }
                 
-                // console.log(data);
-                console.log(data._embedded["city:search-results"][0].matching_full_name);
+                document.querySelector('.ispisGradova').innerHTML=html;
+                
+                if(duzinaNiza<1){
+                    document.querySelector('.ispisGradova').style.display='none';
+                }
+                if(duzinaNiza<2){
+                    document.querySelector('.ispisGradova').style.height='45px';
+                }
+                if(duzinaNiza>1 && duzinaNiza<3){
+                    document.querySelector('.ispisGradova').style.height='90px';
+                }
+
+                // let gradovi = document.querySelector('.grad');
+                // console.log(gradovi);
+                // console.log(gradovi);
+                // gradovi.forEach(i => {
+                //     console.log(i);
+                // })
+                
+            
+                
             },
             error:function(xhr){
                 console.log(xhr);
