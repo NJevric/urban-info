@@ -51,6 +51,14 @@ nav a:hover{
         padding-left: 30px;
     }
 }
+@keyframes navOut{
+    from{
+        padding-left: 30px;
+    }
+    to{
+        padding-left:10px;
+    }
+}
 @keyframes fadeUp{
     from{
         background-color: transparent;
@@ -93,7 +101,9 @@ nav .openMenu .escapeNav{
 nav .openMenu a:hover{
     animation: navHoverAnimacija .3s forwards;
 }
-
+nav .outNav{
+    animation: navOut .3s ease;
+}
 nav .openMenu .escapeNav:hover{
     border:1px solid #fcfcfc;
     border-radius: 50px;

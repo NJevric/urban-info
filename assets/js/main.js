@@ -9,6 +9,8 @@ window.onload=function(){
 
 let nav = () => {
     try{
+        
+        
         document.querySelector('.menuIco').addEventListener('click',function(e){
             e.preventDefault();
             console.log('kliknuto');
