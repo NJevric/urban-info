@@ -6,8 +6,21 @@
 body{
     background-color:#F2F1EF!important;
 }
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Padauk', sans-serif;
+}
+p{
+    font-family: 'Martel Sans', sans-serif;
+}
+h1{
+    font-size:4em;
+}
+h2{
+    font-size:3em!important;
+}
 header{
     background-image: url('../img/home3.jpg');
+    background-size: cover;
     background-position: top;
     height:800px;
 }
@@ -124,7 +137,7 @@ nav .openMenu a:link{
 
 #naslov article h1{
     font-size:4em;
-    font-family: 'Padauk', sans-serif;
+    
 }
 #naslov article p{
     font-size:1.15em;
@@ -179,6 +192,38 @@ datalist{
 }
 main{
     min-height: 100vh;
+}
+main #grad{
+    margin:100px auto;
+}
+main #grad h2{
+   
+    font-weight: 600;
+    
+}
+main #grad .basicInfo, main #grad .nameTranslate{
+    background-color:#fcfcfc;
+    border-radius: 10px;
+    transition:.3s ease;
+}
+main #grad .basicInfo .textBasicInfo{
+    font-size:1.2em;
+    font-weight: 600;
+
+}
+
+main #grad .opis{
+    font-size:1.05em;
+}
+main #grad span{
+    font-weight: 400;
+}
+main #grad .nameTranslate ul{
+    list-style-type: none;
+}
+main #grad .nameTranslate ul li{
+    padding:0px 5px;
+    font-weight: 500;
 }
 footer{
     background-color:#222;
