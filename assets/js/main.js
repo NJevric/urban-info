@@ -8,7 +8,7 @@ window.onload=function(){
         infoCity()
         SignUpForm();
         icons();
-        
+        urbanArea();
         
     }
     catch(err){
@@ -299,7 +299,7 @@ let icons = () => {
 }
 
 let dynamicPrint = () => {
-    let urbanInfo = () => {
+    let urbanIco = () => {
         try{
             let html = `<div class="row text-center">`;
             let arr = [["airplane-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calculator-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calendar-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"]];
@@ -318,7 +318,7 @@ let dynamicPrint = () => {
            console.log(err);
         }
     }
-    urbanInfo();
+    urbanIco();
     let social = () => {
         try{
             let html=``;
@@ -373,5 +373,41 @@ let nav = () => {
         console.log(err);
     }
 
-    
+}
+let urbanArea = () => {
+    try{
+         $.ajax({
+            url: `https://api.teleport.org/api/urban_areas/`,
+            method: "get",
+            dataType: "json",
+            success: function (data) {
+                   
+                ispisUrbanGradova(data);
+                // klikNaUrbanGrad();
+            },
+            error:function(xhr){
+                console.log(xhr);
+            } 
+        });
+        let ispisUrbanGradova = (x) => {
+
+            let linkovi = x._links["ua:item"];
+            let html = ``;
+            linkovi.forEach(i => {
+                html+=` <option value="${i.name}" class="urbanGrad">${i.name}</option>`;
+            });
+            document.querySelector('#urbanCities').innerHTML=html;
+
+            let klikNaUrbanGrad = () => {
+                document.querySelector('#submitUrban').addEventListener('click',function(){
+                    console.log(document.querySelector('#searchUrbanCity').value);
+                });
+            }
+            klikNaUrbanGrad();
+        }
+       
+    }
+    catch(err){
+        console.log(err);
+    }
 }

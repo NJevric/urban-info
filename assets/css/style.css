@@ -152,11 +152,9 @@ nav .openMenu a:link{
     border-radius: 5px!important;
     position:relative;
 }
-datalist{
-    height:150px;
-    overflow-y: scroll;
-}
- #naslov article form .ispisGradova{
+
+ #naslov article form .ispisGradova
+{
     width:75%;
     height:120px;
     overflow-x: hidden;
@@ -244,6 +242,9 @@ main #icons .cardIco:hover{
 }
 main #icons .ico{
     font-size:72px;
+}
+datalist{
+    height:100px!important;
 }
 footer{
     background-color:#222;

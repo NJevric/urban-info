@@ -41,7 +41,7 @@
 
                             </div>
                             <input type="submit" class="btn btn-primary btn-lg" value="Search" id="submit"/>
-                           
+                            
                           
                         </div>
                         
@@ -64,14 +64,27 @@
                 <h2 >Whant to know more about some big urban centers?</h2>
             </div>
             <div class="d-flex col-lg-4 my-5 mx-auto">
-                <input class="form-control" type="text" placeholder="Type to search..." aria-label="Search" id="searchUrban" value="" autocomplete="off" data-id="">
-                <div class="ispisUrbanGradova">
+                <input list="urbanCities" class="form-control" placeholder="Type to search..." id="searchUrbanCity" autocomplete="off">
+                <datalist id="urbanCities">
+                    <!-- <option value="${i.name}">${i.name}</option>
+                    <option value="${i.name}">${i.name}</option>
+                    <option value="${i.name}">${i.name}</option>
+                    <option value="${i.name}">${i.name}</option>
 
-                </div>
+                    <option value="${i.name}">${i.name}</option>
+                    <option value="${i.name}">${i.name}</option>
+                    <option value="${i.name}">${i.name}</option>
+                    <option value="${i.name}">${i.name}</option>
+
+
+                    <option value="${i.name}">${i.name}</option> -->
+                </datalist>
                 <input type="submit" class="btn btn-primary btn-lg" value="Search" id="submitUrban"/>
+                
                
-              
+                
             </div>
+            
         </div>
     </main>
 
