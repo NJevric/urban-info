@@ -9,7 +9,7 @@ window.onload=function(){
         SignUpForm();
         icons();
         urbanArea();
-        
+        ispisInformacijaUrbanGradova();
     }
     catch(err){
         console.log(err);
@@ -18,10 +18,10 @@ window.onload=function(){
     
 let loadInfo = () => {
     document.querySelector('#grad').innerHTML=`  <div class="row">
-    <div class="col-12">
+    <div class="col-10 mx-auto">
         <h2 class="mb-5">Ime Grada</h2>
     </div> 
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center col-lg-10 mx-auto">
         <div class="col-lg-6 basicInfo mr-5">
             <h3 class="mb-2 fs-1">Basic Info</h3>
             <p class="mb-4 opis">- Name of searched city around the globe -</p>
@@ -78,7 +78,7 @@ let searchCity = () => {
             });
             
             let ispisListe = (arg) => {
-                brEl = arg._embedded["city:search-results"].length;
+                let brEl = arg._embedded["city:search-results"].length;
                 
                 let html = '';
               
@@ -173,10 +173,10 @@ let infoCity = () => {
             let ispisGradInfo = (x) => {
                 let html = `
                 <div class="row">
-                <div class="col-12">
+                <div class="col-10 mx-auto">
                      <h2 class="mb-5"> ${x.full_name} </h2>
                 </div> 
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center col-lg-10 mx-auto">
                     <div class="col-lg-6 basicInfo mr-5">
                         <h3 class="mb-2 fs-1">Basic Info</h3>
                         <p class="mb-4 opis">- Name of searched city around the globe -</p>
@@ -376,38 +376,214 @@ let nav = () => {
 }
 let urbanArea = () => {
     try{
-         $.ajax({
-            url: `https://api.teleport.org/api/urban_areas/`,
-            method: "get",
-            dataType: "json",
-            success: function (data) {
+        document.querySelector('#searchUrbanCity').addEventListener('keyup',function(){
+            let vrednost = document.querySelector('#searchUrbanCity').value;
+            document.querySelector('.ispisUrbanGradova').style.visibility='visible';
+
+            $.ajax({
+               url: `https://api.teleport.org/api/urban_areas/`,
+               method: "get",
+               dataType: "json",
+               success: function (data) {
+                      
+                   ispisUrbanGradova(data);
+
+               },
+               error:function(xhr){
+                   console.log(xhr);
+               } 
+           });
+           let ispisUrbanGradova = (x) => {
+   
+               let linkovi = x._links["ua:item"];
+               let imenaGradova=``;
+
+               linkovi.forEach(i => {
+
+                   imenaGradova +=i.name.toLowerCase() + " ";
+
+               });
+              
+               arr = imenaGradova.split(" ");
+               
+               let searchValue = document.querySelector('#searchUrbanCity').value.toLowerCase();
+               
+               let searchFilter = arr.filter(x=>x.indexOf(searchValue)!=-1);
+               let ispis=``;
+               searchFilter.forEach(i=>{
+                
+                ispis += `<p class="urbanGrad" data-id="${i}">${i}</p>`;
+             
+               });
+
+               brEl = searchFilter.length;
+               document.querySelector('.ispisUrbanGradova').innerHTML=ispis;
+           
+               let stilPrikazGradova = () => {
                    
-                ispisUrbanGradova(data);
-                // klikNaUrbanGrad();
-            },
-            error:function(xhr){
-                console.log(xhr);
-            } 
-        });
-        let ispisUrbanGradova = (x) => {
-
-            let linkovi = x._links["ua:item"];
-            let html = ``;
-            linkovi.forEach(i => {
-                html+=` <option value="${i.name}" class="urbanGrad">${i.name}</option>`;
-            });
-            document.querySelector('#urbanCities').innerHTML=html;
-
-            let klikNaUrbanGrad = () => {
-                document.querySelector('#submitUrban').addEventListener('click',function(){
-                    console.log(document.querySelector('#searchUrbanCity').value);
-                });
+                   if(brEl<1 || document.querySelector('#searchUrbanCity').value==""){
+                       document.querySelector('.ispisUrbanGradova').style.visibility='hidden';
+                   }
+                   if(brEl<2){
+                       document.querySelector('.ispisUrbanGradova').style.height='45px';
+                       console.log(brEl);
+                   }
+                   if(brEl>1 && brEl<3){
+                       document.querySelector('.ispisUrbanGradova').style.height='90px';
+                   }
+               }
+               stilPrikazGradova();
+               let klikNaGrad = () => {
+                   var myEl = document.getElementsByClassName('urbanGrad');
+                   
+                   
+                   for(let i=0;i<myEl.length;i++){
+                      myEl[i].addEventListener('click',function(){
+                          console.log(myEl[i]);
+                           document.querySelector('#searchUrbanCity').value = myEl[i].innerHTML;
+                           document.querySelector('#searchUrbanCity').dataset.id = myEl[i].dataset.id;
+                           setTimeout(()=>{
+                               document.querySelector('.ispisUrbanGradova').style.visibility='hidden';
+                           },100);
+                       });
+                   }
+               }
+               klikNaGrad();
             }
-            klikNaUrbanGrad();
-        }
-       
+        });
+      
+        
     }
     catch(err){
         console.log(err);
     }
+    try{
+        document.querySelector('#searchUrbanCity').addEventListener('blur',function(){
+            document.querySelector('.ispisUrbanGradova').style.visibility='hidden';
+        });
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+let ispisInformacijaUrbanGradova = () => {
+    document.querySelector('#submitUrban').addEventListener('click',function(e){
+
+        e.preventDefault();
+        // console.log(document.querySelector('#searchUrbanCity').value);
+        let vrednost = document.querySelector('#searchUrbanCity').dataset.id;
+        console.log(vrednost);
+
+        ispisSlika = () =>{
+            $.ajax({
+                url: `https://api.teleport.org/api/urban_areas/slug%3A${vrednost}/images/`,
+                method: "get",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data.photos[0].image.mobile);
+                    // console.log(data.)
+                    ispis(data);
+                    
+                },
+                error:function(xhr){
+                    console.log(xhr);
+                } 
+            });
+            let ispis = (arr) =>{
+        
+                let html=``;
+                // console.log(arr);
+       
+                    html=`<img src=${arr.photos[0].image.mobile} alt="${vrednost}" class="img-fluid float-right"/>`;
+                    document.querySelector('.slika').innerHTML=html;
+                
+          
+               
+                
+            }
+           
+        }
+        ispisBasicUrbanInfo = () => {
+            $.ajax({
+                url: `https://api.teleport.org/api/urban_areas/slug%3A${vrednost}/`,
+                method: "get",
+                dataType: "json",
+                success: function (data) {
+                 
+                    console.log(data.full_name);
+                    ispis(data);
+                    
+                },
+                error:function(xhr){
+                    console.log(xhr);
+                } 
+            });
+            
+            let html=``;
+            ispis = (arr) => {
+                
+                html+=`
+                <h3 class="">${arr.full_name}</h3>
+                <div class="lista">
+                    <p>Continent : <span>  ${arr.continent}</span></p>
+                    <p>Mayor : <span> ${arr.mayor} </span></p>
+                    
+                </div>`
+                document.querySelector('.text').innerHTML=html;
+                ispisDetails = (x) =>{
+                 
+                    $.ajax({
+                        url: `https://api.teleport.org/api/urban_areas/slug%3A${vrednost}/details`,
+                        method: "get",
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                            console.log(data.categories);
+                            // console.log(data.categories[11].data[2].string_value);
+                            ispis(data);
+                        },
+                        error:function(xhr){
+                            console.log(xhr);
+                        } 
+                    });
+                    // <p>Native Language : <span> ${arr.categories[11].data[2].string_value} </span></p>`
+                    ispis = (arr) => {
+
+                        let ispisHtml =``;
+                        console.log(arr.categories[6].data.length -1);
+                        
+                        let language;
+                        let educationUniversity = arr.categories[6].data.length - 2;
+                        let educationUniversityRank = arr.categories[6].data.length -1;
+                        console.log(arr.categories[6].data[educationUniversity].string_value);
+                        if(arr.categories[11].data.length==1){
+                            language = arr.categories[11].data[0].string_value;
+                        }
+                        else{
+                            language = arr.categories[11].data[2].string_value;
+                        }
+                        ispisHtml+=`
+                        <p>Native Language : <span> ${language} </span></p>
+                        <p>Currency : <span> ${arr.categories[5].data[0].string_value} </span></p>
+                        <p>Population : <span> ${arr.categories[1].data[0].float_value} milion</span></p>
+                        <p>Best Univeristy : <span> ${arr.categories[6].data[educationUniversity].string_value} (rank: ${arr.categories[6].data[educationUniversityRank].int_value})</span></p>
+                        `;
+                        document.querySelector('.lista').innerHTML+=ispisHtml;
+                    }
+                 
+                    
+                }
+                ispisDetails(arr);
+                
+               
+            }
+            
+        }
+
+        ispisSlika();
+        ispisBasicUrbanInfo();
+        
+    });
+    
+
 }

@@ -19,6 +19,9 @@ h2{
     font-size:2.8em!important;
     width:500px;
 }
+h3{
+    font-size:2.5em!important;
+}
 header{
     background-image: url('../img/home3.jpg');
     background-size: cover;
@@ -153,7 +156,7 @@ nav .openMenu a:link{
     position:relative;
 }
 
- #naslov article form .ispisGradova
+ #naslov article form .ispisGradova,main .ispisUrbanGradova
 {
     width:75%;
     height:120px;
@@ -168,28 +171,30 @@ nav .openMenu a:link{
     visibility:hidden;
     transition:.3s ease;
 }
-#naslov article form .ispisGradova .grad{
+#naslov article form .ispisGradova .grad,.ispisUrbanGradova .urbanGrad{
     width:100%;
     padding:5px;
 } 
- #naslov article form .ispisGradova .grad:hover{
+ #naslov article form .ispisGradova .grad:hover,.ispisUrbanGradova .urbanGrad:hover{
     background-color:#0275d8;
     color:#fcfcfc;
 }
-#naslov article form .ispisGradova::-webkit-scrollbar {
+#naslov article form .ispisGradova::-webkit-scrollbar,main .ispisUrbanGradova::-webkit-scrollbar {
     display: none;
 }
 
-#naslov article form input{
+#naslov article form input,.searchUrbanGradova  #searchUrbanCity{
     border:0px!important;
     border-radius: 5px!important;
     width:75%!important;
 }
-#naslov article form input:last-of-type{
+#naslov article form input:last-of-type, .searchUrbanGradova input:last-of-type{
     border-radius:0px 5px 5px 0px!important;
     width:25%!important;
 }
-
+/* main{
+    min-height: 100vh;
+} */
 main #grad{
     margin:100px auto;
 }
@@ -243,9 +248,72 @@ main #icons .cardIco:hover{
 main #icons .ico{
     font-size:72px;
 }
-datalist{
-    height:100px!important;
+
+#searchCity,#moreInfo{
+    margin-bottom: 100px;
 }
+.searchUrbanGradova{
+    position:relative;
+}
+
+.urbanGrad::first-letter{
+    text-transform: uppercase;
+}
+
+/* #imageAndText{
+    height:500px;
+} */
+/* #imageAndText .slika{
+    margin-top:100px;
+} */
+#imageAndText .slika img{
+    height: 500px;
+
+}
+.text{
+    text-align: justify;    
+}
+.text h3{
+    
+   padding-bottom: 50px;
+}
+.text .lista p{
+    font-size: 1.1em;
+    font-weight: 600;
+}
+.text .lista span{
+    font-weight: 400;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 footer{
     background-color:#222;
     color:#fcfcfc;
