@@ -19,7 +19,7 @@ window.onload=function(){
 let loadInfo = () => {
     document.querySelector('#grad').innerHTML=`  <div class="row">
     <div class="col-10 mx-auto">
-        <h2 class="mb-5">Ime Grada</h2>
+        <h2 class="mb-5">City Name</h2>
     </div> 
     <div class="d-flex justify-content-center col-lg-10 mx-auto">
         <div class="col-lg-6 basicInfo mr-5">
