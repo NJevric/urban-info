@@ -305,7 +305,7 @@ let dynamicPrint = () => {
             let arr = [["airplane-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calculator-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calendar-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"]];
             arr.forEach(i => {
                 html+=`
-                <div class="col-lg-4 cardIco p-5">
+                <div class="col-lg-4 cardIco p-5 ">
                     <ion-icon name="${i[0]}" class="ico mx-auto pb-5"></ion-icon>
                     <p>${i[1]}</p>
                 </div>
@@ -566,6 +566,7 @@ let ispisInformacijaUrbanGradova = () => {
                         <p>Native Language : <span> ${language} </span></p>
                         <p>Currency : <span> ${arr.categories[5].data[0].string_value} </span></p>
                         <p>Population : <span> ${arr.categories[1].data[0].float_value} milion</span></p>
+                        <p>GDP growth : <span> ${arr.categories[5].data[2].percent_value} %</span></p>
                         <p>Best Univeristy : <span> ${arr.categories[6].data[educationUniversity].string_value} (rank: ${arr.categories[6].data[educationUniversityRank].int_value})</span></p>
                         `;
                         document.querySelector('.lista').innerHTML+=ispisHtml;
