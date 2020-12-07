@@ -234,6 +234,7 @@ main #icons{
     background-color: #222;
     color:#fcfcfc;
     min-height:500px;
+    
 }
 main #icons .cardIco{
     height:300px;
@@ -514,5 +515,8 @@ footer .social a:hover{
     .text .lista p {
         font-size: .95em;
        
+    }
+    #icons .row{
+             margin-right: 0px!important;
     }
 }

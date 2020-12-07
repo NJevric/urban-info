@@ -339,7 +339,7 @@ let dynamicPrint = () => {
             let arr = [["airplane-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calculator-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calendar-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"]];
             arr.forEach(i => {
                 html+=`
-                <div class="col-lg-4 cardIco p-5 ">
+                <div class="col-lg-4 col-11 cardIco p-5 ">
                     <ion-icon name="${i[0]}" class="ico mx-auto pb-5"></ion-icon>
                     <p>${i[1]}</p>
                 </div>
