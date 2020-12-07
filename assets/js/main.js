@@ -25,17 +25,16 @@ window.onload=function(){
 let loadInfo = () => {
     console.log('a');
     
-    document.querySelector('#grad').innerHTML=`   <div class="row">
-    <div class="col-lg-6">
+    document.querySelector('#grad').innerHTML=`   <div class="row  mx-auto">
+    <div class="col-lg-6 col-12 ">
         <div class="col-12 mx-auto">
-            <h2 class="mb-5">City Name</h2>
+            <h2 class="">City Name</h2>
         </div> 
         <div class="col-lg-12 mx-auto ">
             <div class="col-lg-6 col-11 basicInfo mr-lg-5 mr-0">
-                <h3 class="mb-2 fs-1">Basic Info</h3>
-                <p class="mb-4 opis">- Name of searched city around the globe -</p>
+                
+                <p class="mb-4 opis text-left">- Name of searched city around the globe -</p>
                 <div class="textBasicInfo">
-                    <p>Full Name : <span>  </span></p>
                     <p>Country : <span> </span></p>
                     <p>Division : <span>  </span></p>
                     <p>Timezone : <span> </span></p>
@@ -50,28 +49,24 @@ let loadInfo = () => {
             
         </div>
     </div>
-    <div class="col-lg-6">
-        <div id="mapa" ></div>
+    <div class="col-lg-6 col-md-10 col-12 mx-auto mx-lg-0">
+        <div id="mapa"></div>
     </div>
 </div>`;
-var map = new Datamap({
+
+var mapa = new Datamap({
     scope:'world',
     element: document.getElementById("mapa"),
     projection: 'orthographic',
-    geographyConfig: {
-        popupOnHover: false,
-        highlightOnHover: false
-    },
+    height:null,
+    width:null,
     projectionConfig: {
         rotation: [0,-20]
-    },
-    
-    fills: {
-        defaultFill: '#ABDDA4',
-        USA: '#333',
-    }
+    }, 
 });
-map.graticule();
+
+
+      
 }
 
 let searchCity = () => {
@@ -212,14 +207,14 @@ let infoCity = () => {
                     
                 }
                 console.log(arr);
-                var bubble_map = new Datamap({
+                var mapa = new Datamap({
                     scope:'world',
                     element: document.getElementById("mapa"),
                     projection: 'orthographic',
-                    geographyConfig: {
-                        popupOnHover: false,
-                        highlightOnHover: false
-                    },
+                    // geographyConfig: {
+                    //     popupOnHover: false,
+                    //     highlightOnHover: true
+                    // },
                     projectionConfig: {
                         rotation: [okret(),-20]
                     },
@@ -229,7 +224,8 @@ let infoCity = () => {
                         USA: '#333',
                     }
                 });
-                bubble_map.bubbles([
+                
+                mapa.bubbles([
                 {
                     name: '',
                     radius: 7,
@@ -250,13 +246,13 @@ let infoCity = () => {
                 let html = `
                 <div class="row">
                 <div class="col-lg-6>
-                    <div class="col-12 mx-auto">
-                        <h2 class="mb-5"> ${x.full_name} </h2>
+                    <div class="col-10 mx-auto">
+                        <h2 class=""> ${x.full_name} </h2>
                     </div> 
                     <div class="justify-content-center col-lg-6 mx-auto">
-                        <div class="col-lg-12 col-11 basicInfo mr-lg-5 mr-0 mx-auto mx-lg-0">
-                            <h3 class="mb-2 fs-1">Basic Info</h3>
-                            <p class="mb-4 opis">- Basic info of searched city around the globe -</p>
+                        <div class="col-lg-12 col-11 basicInfo mr-lg-5 mr-0">
+                      
+                            <p class="mb-4 opis text-left">- Basic info of searched city around the globe -</p>
                             <div class="textBasicInfo">
                             
                                 <p>Country : <span>  ${x._links["city:country"].name}</span></p>
@@ -272,7 +268,7 @@ let infoCity = () => {
 
                         
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-md-10 col-12 mx-auto mx-lg-0">
                         <div id="mapa"></div>
                     </div>
                 </div>`;
@@ -699,23 +695,25 @@ let ispisInformacijaUrbanGradova = () => {
                             proba.forEach(j => {
                                 console.log(j[0]);
                             })
+                            
                             ispisHTML += ` 
-                            <div class="info col-lg-3">
+                            <div class="info col-xl-3 col-md-6">
                                 <ion-icon name="${i[0]}" class="col-12 mx-auto"></ion-icon>
                                 <div class="infoText">
                                     <h4 class="text-center my-4">${i[1]}</h4>
                                     <div class="opis px-5">`
                                     
                                     i[2].forEach( j => {
-                                        ispisHTML += `<div class="d-flex"><ion-icon name="ellipse-outline" class="fs-6 mt-1 mr-3"></ion-icon><p class="">${j[0]}: <span> ${j[1]}</span<</p></div>`;
+                                        ispisHTML += `<div class="d-flex aa"><ion-icon name="ellipse-outline" class="fs-6 mt-1 mr-3"></ion-icon><p class="">${j[0]}: <span> ${j[1]}</span<</p></div>`;
                                     });
                                     
                                     ispisHTML+=`
                                     </div>
                                 </div>
-                            </div>`
+                            </div>
+                            `
                         });
-                        document.querySelector('#specificInfo').innerHTML = ispisHTML;
+                        document.querySelector('.specificInfo').innerHTML = ispisHTML;
                         
                     }
                  
@@ -746,7 +744,7 @@ let ispisInformacijaUrbanGradova = () => {
                     console.log(arr);
                    
                     arr.forEach(i => {
-                        html += `<div class="score col-lg-2">
+                        html += `<div class="score col-xl-2 col-lg-3 col-md-4 col-6 mx-auto mx-lg-0 text-center">
                         <p class="mr-5">${i.name}</p>
                         <progress class="progres mb-4" value="${i.score_out_of_10}" max='${max}'>${i.score_out_of_10}</progress>
                        

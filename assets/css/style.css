@@ -323,49 +323,11 @@ main #icons .ico{
 #mapa{
     height:100%;
     width: 100%;
+    position: relative;
 }
-
-
-
-/* #appearance7 .rs-range-color  {
-    background-color: #33B5E5;
+#mapa svg{
+    height:500px;
 }
-#appearance7 .rs-path-color  {
-    background-color: #C2E9F7;
-}
-#appearance7 .rs-handle  {
-    background-color: #C2E9F7;
-    padding: 7px;
-    border: 2px solid #C2E9F7;
-}
-#appearance7 .rs-handle.rs-focus  {
-    border-color: #33B5E5;
-}
-#appearance7 .rs-handle:after  {
-    border-color: #33B5E5;
-    background-color: #33B5E5;
-}
-#appearance7 .rs-border  {
-    border-color: transparent;
-} */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 footer{
@@ -425,4 +387,132 @@ footer .social a:hover{
     border:1px solid #333;
     border-radius:50px;
     
+}
+
+@media screen and (max-width:1280px){
+   
+    #specificInfo .info ion-icon {
+        font-size: 36px;
+    }
+    h4 {
+        font-size: 1.1em!important;
+    }
+    #specificInfo .info .opis ion-icon {
+        width:5px;
+        height:5px;
+    }
+    specificInfo .info .opis {
+        width: 100%;
+        
+    }
+    .opis{
+        text-align: center;
+    }
+    main #icons .cardIco p {
+        width: 250px;
+        
+    }
+}
+@media screen and (max-width:1024px){
+    main #grad .basicInfo .textBasicInfo {
+        font-size: 1em;
+        font-weight: 600;
+    }
+    main #icons .ico {
+        font-size: 58px;
+    }
+    
+    #specificInfo .info {
+   
+        padding: 20px 0px;
+     
+    }
+    .aa{
+        justify-content: center;
+    }
+    /* #mapa svg{
+        
+        height:500px;
+        text-align: justify;
+        float: left;
+    } */
+}
+@media screen and (max-width:415px){
+    #mapa{
+        height:334px;
+    }
+    #mapa svg{
+        
+        height:400px;
+        text-align: justify;
+        float: left;
+    }
+    nav .openMenu {
+      
+        font-size: 2em;
+      
+    }
+    header {
+        
+        height: 100vh;
+    }
+    #naslov article h1 {
+        font-size: 3em;
+    }
+    #naslov article p {
+        font-size: 1em;
+       
+    }
+    #naslov article form {
+      
+        width: 85%;
+     
+    }
+    #naslov article form input, .searchUrbanGradova #searchUrbanCity {
+     
+        width: 70%!important;
+    }
+    #naslov article form input:last-of-type, .searchUrbanGradova input:last-of-type {
+
+        width: 30%!important;
+    }
+    #naslov article form .ispisGradova, main .ispisUrbanGradova {
+        width: 70%;
+       
+    }
+    main #grad {
+        margin: 70px auto;
+    }
+    h2 {
+        font-size: 2.4em!important;
+        width: 90%;
+    }
+    #naslov {
+        margin: 100px auto;
+       
+    }
+    #mapa{
+        width: 100%;
+        height:100%;
+    }
+    main #icons {
+        padding: 0px 0px;
+        margin-bottom: 100px;
+ 
+    }
+    main #icons .ico {
+        font-size: 42px;
+    }
+    #searchCity, #moreInfo, #specificInfo {
+        margin-bottom: 50px;
+    }
+    .text h3 {
+        padding-bottom: 40px;
+        
+        text-align: center;
+    }
+    .text .lista p {
+        font-size: .95em;
+       
+    }
 }
