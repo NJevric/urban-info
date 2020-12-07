@@ -708,7 +708,7 @@ let ispisInformacijaUrbanGradova = () => {
                         html += `<div class="score col-lg-2">
                         <p class="mr-5">${i.name}</p>
 
-                        <progress class="progres mt-1" value="${i.score_out_of_10}" max='${max}'>${i.score_out_of_10}</progress>
+                        <progress class="progres mb-4" value="${i.score_out_of_10}" max='${max}'>${i.score_out_of_10}</progress>
                     </div>`
                     console.log(i);
                     
