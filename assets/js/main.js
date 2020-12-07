@@ -10,6 +10,12 @@ window.onload=function(){
         icons();
         urbanArea();
         ispisInformacijaUrbanGradova();
+       
+       
+       
+            
+            
+  
     }
     catch(err){
         console.log(err);
@@ -17,40 +23,55 @@ window.onload=function(){
 }
     
 let loadInfo = () => {
-    document.querySelector('#grad').innerHTML=`  <div class="row">
-    <div class="col-10 mx-auto">
-        <h2 class="mb-5">City Name</h2>
-    </div> 
-    <div class="d-flex justify-content-center col-lg-10 mx-auto">
-        <div class="col-lg-6 basicInfo mr-5">
-            <h3 class="mb-2 fs-1">Basic Info</h3>
-            <p class="mb-4 opis">- Name of searched city around the globe -</p>
-            <div class="textBasicInfo">
-                <p>Full Name : <span>  </span></p>
-                <p>Country : <span> </span></p>
-                <p>Division : <span>  </span></p>
-                <p>Timezone : <span> </span></p>
-                <div class="location">
-                    <p>Latitude : <span> </span></p>
-                    <p>Longitude : <span> </span></p>
+    console.log('a');
+    
+    document.querySelector('#grad').innerHTML=`   <div class="row">
+    <div class="col-lg-6">
+        <div class="col-12 mx-auto">
+            <h2 class="mb-5">City Name</h2>
+        </div> 
+        <div class="col-lg-12 mx-auto ">
+            <div class="col-lg-6 col-11 basicInfo mr-lg-5 mr-0">
+                <h3 class="mb-2 fs-1">Basic Info</h3>
+                <p class="mb-4 opis">- Name of searched city around the globe -</p>
+                <div class="textBasicInfo">
+                    <p>Full Name : <span>  </span></p>
+                    <p>Country : <span> </span></p>
+                    <p>Division : <span>  </span></p>
+                    <p>Timezone : <span> </span></p>
+                    <div class="location">
+                        <p>Latitude : <span> </span></p>
+                        <p>Longitude : <span> </span></p>
+                    </div>
+                    <p>Population : <span> </span></p>   
                 </div>
-                <p>Population : <span> </span></p>   
             </div>
-        </div>
 
-        <div class="col-lg-6  nameTranslate ">
-            <h4 class="mb-2 fs-1">Translated city name</h4>
-            <div class="textTranslatedName">
-            <p class="mb-4 opis">- Name of searched city around the globe -</p>
-                <div class="prevod">
-                    <ul class="d-flex justify-content-space-around" id="ispisPrevoda">
-                    
-                    </ul>
-                </div>
-            </div>
+            
         </div>
-        </div>
-    </div>`;
+    </div>
+    <div class="col-lg-6">
+        <div id="mapa" ></div>
+    </div>
+</div>`;
+var map = new Datamap({
+    scope:'world',
+    element: document.getElementById("mapa"),
+    projection: 'orthographic',
+    geographyConfig: {
+        popupOnHover: false,
+        highlightOnHover: false
+    },
+    projectionConfig: {
+        rotation: [0,-20]
+    },
+    
+    fills: {
+        defaultFill: '#ABDDA4',
+        USA: '#333',
+    }
+});
+map.graticule();
 }
 
 let searchCity = () => {
@@ -164,78 +185,95 @@ let infoCity = () => {
                 success: function (data) {
                     console.log(data);
                     ispisGradInfo(data);
+                    ispisMape(data);
                 },
                 error:function(xhr){
                     console.log(xhr);
                 } 
             });
-
+            let ispisMape = (arr) => {
+                function okret(){
+                    let okret = 0;
+                    if(arr.location.latlon.longitude<-50){
+                        return okret = 80;
+                    }
+                    if(arr.location.latlon.longitude<0 && arr.location.latlon.longitude>-50){
+                        return okret = 0;
+                    }
+              
+                    if(arr.location.latlon.longitude>0 && arr.location.latlon.longitude<50){
+                        return okret = 0;
+                    }
+                    if(arr.location.latlon.longitude>50){
+                        return okret = -80;
+                    }
+                    
+                
+                    
+                }
+                console.log(arr);
+                var bubble_map = new Datamap({
+                    scope:'world',
+                    element: document.getElementById("mapa"),
+                    projection: 'orthographic',
+                    geographyConfig: {
+                        popupOnHover: false,
+                        highlightOnHover: false
+                    },
+                    projectionConfig: {
+                        rotation: [okret(),-20]
+                    },
+                    
+                    fills: {
+                        defaultFill: '#ABDDA4',
+                        USA: '#333',
+                    }
+                });
+                bubble_map.bubbles([
+                {
+                    name: '',
+                    radius: 7,
+                    country: 'USA',
+                    yeild: 0,
+                    fillKey: 'USA',
+                    date: '1954-03-01',
+                    latitude: arr.location.latlon.latitude,
+                    longitude: arr.location.latlon.longitude
+                },
+                
+                
+                ]);
+        
+                
+            }
             let ispisGradInfo = (x) => {
                 let html = `
                 <div class="row">
-                <div class="col-10 mx-auto">
-                     <h2 class="mb-5"> ${x.full_name} </h2>
-                </div> 
-                <div class="d-flex justify-content-center col-lg-10 mx-auto">
-                    <div class="col-lg-6 basicInfo mr-5">
-                        <h3 class="mb-2 fs-1">Basic Info</h3>
-                        <p class="mb-4 opis">- Basic info of searched city around the globe -</p>
-                        <div class="textBasicInfo">
+                <div class="col-lg-6>
+                    <div class="col-12 mx-auto">
+                        <h2 class="mb-5"> ${x.full_name} </h2>
+                    </div> 
+                    <div class="justify-content-center col-lg-6 mx-auto">
+                        <div class="col-lg-12 col-11 basicInfo mr-lg-5 mr-0 mx-auto mx-lg-0">
+                            <h3 class="mb-2 fs-1">Basic Info</h3>
+                            <p class="mb-4 opis">- Basic info of searched city around the globe -</p>
+                            <div class="textBasicInfo">
+                            
+                                <p>Country : <span>  ${x._links["city:country"].name}</span></p>
+                                <p>Division : <span> ${x._links["city:admin1_division"].name} </span></p>
+                                <p>Timezone : <span> ${x._links["city:timezone"].name}</span></p>
+                                <div class="location">
+                                    <p>Latitude : <span>${x.location.latlon.latitude} </span></p>
+                                    <p>Longitude : <span>${x.location.latlon.longitude} </span></p>
+                                </div>
+                                <p>Population : <span> ${x.population}</span></p>   
+                            </div>
+                        </div>
+
                         
-                            <p>Country : <span>  ${x._links["city:country"].name}</span></p>
-                            <p>Division : <span> ${x._links["city:admin1_division"].name} </span></p>
-                            <p>Timezone : <span> ${x._links["city:timezone"].name}</span></p>
-                            <div class="location">
-                                <p>Latitude : <span>${x.location.latlon.latitude} </span></p>
-                                <p>Longitude : <span>${x.location.latlon.longitude} </span></p>
-                            </div>
-                            <p>Population : <span> ${x.population}</span></p>   
-                        </div>
                     </div>
-
-                    <div class="col-lg-6 nameTranslate">
-                        <h4 class="mb-2 fs-1">Translated city name</h4>
-                        <div class="textTranslatedName">
-                        <p class="mb-4 opis">- How others are saying the name of searched city around the globe -</p>
-                            <div class="prevod">
-                                <ul class="" id="ispisPrevoda">
-                                    `
-                                    $.ajax({
-                                        url: `https://api.teleport.org/api/cities/geonameid%3A${vrednost}/alternate_names`,
-                                        method: "get",
-                                        dataType: "json",
-                                        success: function (data) {
-                                            console.log(data);
-                                            let podaci = data.alternate_names;
-                                            console.log(podaci.length);
-                                            let ispis = ``
-                                            if(podaci.length<10){
-                                                for(let i=0;i<podaci.length;i++){
-                                    
-                                                    ispis+=`<li>${podaci[i].name}</li>`;
-                                                    
-                                                }
-                                            }
-                                            else{
-                                                for(let i=0;i<10;i++){
-                                    
-                                                    ispis+=`<li>${podaci[i].name}</li>`;
-                                                    
-                                                }
-                                            }
-                                        
-
-                                            document.querySelector('#ispisPrevoda').innerHTML=ispis;
-                                        },
-                                        error:function(xhr){
-                                            console.log(xhr);
-                                        } 
-                                    });
-                                    html+=`
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="col-lg-6">
+                        <div id="mapa"></div>
                     </div>
                 </div>`;
                 
@@ -512,6 +550,7 @@ let ispisInformacijaUrbanGradova = () => {
                  
                     console.log(data.full_name);
                     ispis(data);
+              
                     
                 },
                 error:function(xhr){
@@ -520,6 +559,7 @@ let ispisInformacijaUrbanGradova = () => {
             });
             
             let html=``;
+            
             ispis = (arr) => {
                 
                 html+=`
@@ -701,20 +741,38 @@ let ispisInformacijaUrbanGradova = () => {
                     } 
                 });
                 let ispis = (arr) => {
-                    const max = '10'
+                    const max = '10';
                     let html = `<div class="row">`;
                     console.log(arr);
+                   
                     arr.forEach(i => {
                         html += `<div class="score col-lg-2">
                         <p class="mr-5">${i.name}</p>
-
                         <progress class="progres mb-4" value="${i.score_out_of_10}" max='${max}'>${i.score_out_of_10}</progress>
-                    </div>`
+                       
+                        
+                     </div>`
+                     
                     console.log(i);
                     
                     });
                     html+=`</div>`
                     document.querySelector('#scores').innerHTML=html;
+
+                    // let a = () => {
+                    //     let arr = [1,2,3];
+                    //     let ispis=``;
+                    //     for(let i=0;i<arr.length;i++){
+                    //         console.log(i);
+                    //         ispis+=`<div class="a"> </div>`
+                    //         console.log(ispis);
+                            
+                    //     }
+                    //     document.querySelector('#appearance').innerHTML = ispis;
+                        
+                    // }
+                    // a();
+                   
                 }
             }
         }
