@@ -179,7 +179,7 @@ let infoCity = () => {
                 <div class="d-flex justify-content-center col-lg-10 mx-auto">
                     <div class="col-lg-6 basicInfo mr-5">
                         <h3 class="mb-2 fs-1">Basic Info</h3>
-                        <p class="mb-4 opis">- Name of searched city around the globe -</p>
+                        <p class="mb-4 opis">- Basic info of searched city around the globe -</p>
                         <div class="textBasicInfo">
                         
                             <p>Country : <span>  ${x._links["city:country"].name}</span></p>
@@ -196,7 +196,7 @@ let infoCity = () => {
                     <div class="col-lg-6 nameTranslate">
                         <h4 class="mb-2 fs-1">Translated city name</h4>
                         <div class="textTranslatedName">
-                        <p class="mb-4 opis">- Name of searched city around the globe -</p>
+                        <p class="mb-4 opis">- How others are saying the name of searched city around the globe -</p>
                             <div class="prevod">
                                 <ul class="" id="ispisPrevoda">
                                     `
@@ -526,11 +526,12 @@ let ispisInformacijaUrbanGradova = () => {
                 <h3 class="">${arr.full_name}</h3>
                 <div class="lista">
                     <p>Continent : <span>  ${arr.continent}</span></p>
-                    <p>Mayor : <span> ${arr.mayor} </span></p>
+                    
                     
                 </div>`
+                // <p>Mayor : <span> ${arr.mayor} </span></p>
                 document.querySelector('.text').innerHTML=html;
-                ispisDetails = (x) =>{
+                ispisDetails = () =>{
                  
                     $.ajax({
                         url: `https://api.teleport.org/api/urban_areas/slug%3A${vrednost}/details`,
@@ -543,7 +544,6 @@ let ispisInformacijaUrbanGradova = () => {
                             // console.log(data.categories[11].data[2].string_value);
                             ispisBasic(data);
                             ispisDetail(data);
-                          
                         },
                         error:function(xhr){
                             console.log(xhr);
@@ -660,7 +660,7 @@ let ispisInformacijaUrbanGradova = () => {
                                 console.log(j[0]);
                             })
                             ispisHTML += ` 
-                            <div class="info col-lg-4">
+                            <div class="info col-lg-3">
                                 <ion-icon name="${i[0]}" class="col-12 mx-auto"></ion-icon>
                                 <div class="infoText">
                                     <h4 class="text-center my-4">${i[1]}</h4>
@@ -681,16 +681,48 @@ let ispisInformacijaUrbanGradova = () => {
                  
                     
                 }
-                ispisDetails(arr);
+
+                ispisDetails();
                 
                
             }
-            
+            ispisScores = () =>{
+                $.ajax({
+                    url: `https://api.teleport.org/api/urban_areas/slug%3A${vrednost}/scores/`,
+                    method: "get",
+                    dataType: "json",
+                    success: function (data) {
+                     
+                       console.log(data.categories);
+                        ispis(data.categories);
+                    },
+                    error:function(xhr){
+                        console.log(xhr);
+                    } 
+                });
+                let ispis = (arr) => {
+                    const max = '10'
+                    let html = `<div class="row">`;
+                    console.log(arr);
+                    arr.forEach(i => {
+                        html += `<div class="score col-lg-2">
+                        <p class="mr-5">${i.name}</p>
+
+                        <progress class="progres mt-1" value="${i.score_out_of_10}" max='${max}'>${i.score_out_of_10}</progress>
+                    </div>`
+                    console.log(i);
+                    
+                    });
+                    html+=`</div>`
+                    document.querySelector('#scores').innerHTML=html;
+                }
+            }
         }
 
+        
         ispisSlika();
         ispisBasicUrbanInfo();
-        
+        ispisScores();
     });
     
 
