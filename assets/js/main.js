@@ -539,15 +539,18 @@ let ispisInformacijaUrbanGradova = () => {
                         success: function (data) {
                             console.log(data);
                             console.log(data.categories);
+                            console.log(data.categories[0].id);
                             // console.log(data.categories[11].data[2].string_value);
-                            ispis(data);
+                            ispisBasic(data);
+                            ispisDetail(data);
+                          
                         },
                         error:function(xhr){
                             console.log(xhr);
                         } 
                     });
                     // <p>Native Language : <span> ${arr.categories[11].data[2].string_value} </span></p>`
-                    ispis = (arr) => {
+                    ispisBasic = (arr) => {
 
                         let ispisHtml =``;
                         console.log(arr.categories[6].data.length -1);
@@ -568,8 +571,112 @@ let ispisInformacijaUrbanGradova = () => {
                         <p>Population : <span> ${arr.categories[1].data[0].float_value} milion</span></p>
                         <p>GDP growth : <span> ${arr.categories[5].data[2].percent_value} %</span></p>
                         <p>Best Univeristy : <span> ${arr.categories[6].data[educationUniversity].string_value} (rank: ${arr.categories[6].data[educationUniversityRank].int_value})</span></p>
+                        <p>Weather Type : <span> ${arr.categories[2].data[arr.categories[2].data.length-1].string_value}</span></p>
                         `;
                         document.querySelector('.lista').innerHTML+=ispisHtml;
+                    }
+                    ispisDetail = (arr) => {
+                        console.log('proba');
+                        let ispisHTML =``;
+                        let skrati = arr.categories;
+                        
+                        let icons = [
+                            ["cash-outline", skrati[0].id + ' (0-100)',
+                                [
+                                    [
+                                        "Business Freedom",
+                                        skrati[0].data[0].float_value
+                                    ],
+                                    [
+                                        "Corruption Freedom",
+                                        skrati[0].data[2].float_value
+                                    ],
+                                    [
+                                        "Labor Freedom",
+                                        skrati[0].data[4].float_value
+                                    ],
+                                    [
+                                        "TTO Business",
+                                        skrati[0].data[6].float_value
+                                    ]
+                                ]
+                            ],
+                            ["rainy-outline", skrati[2].id,
+                                [
+                                    [
+                                        "Weather Avg High",
+                                        skrati[2].data[skrati[2].data.length -4].string_value + "C"
+                                    ],
+                                    [
+                                        "Weather Avg Low",
+                                        skrati[2].data[skrati[2].data.length -3].string_value + "C"
+                                    ]
+                                
+                                ]
+                            ],
+                            ["alert-outline", skrati[15].id + ' (0-10)',
+                                [
+                                    [
+                                        "Air Pollution",
+                                        skrati[15].data[0].float_value
+                                    ],
+                                    [
+                                        "Cleanliness",
+                                        skrati[15].data[1].float_value
+                                    ],
+                                    [
+                                        "Drinking Watter Quality",
+                                        skrati[15].data[2].float_value
+                                    ],
+                                    [
+                                        "Greenery",
+                                        skrati[15].data[3].float_value
+                                    ]
+                                ]
+                            ],
+                            ["accessibility-outline", skrati[9].id,
+                                [
+                                
+                                    [
+                                        "Life Expectancy",
+                                        skrati[9].data[1].float_value
+                                    ],
+                                    [
+                                        "Median Age",
+                                        skrati[9].data[2].float_value
+                                    ],
+                                    [
+                                        "Unemployment Rate",
+                                        skrati[9].data[3].percent_value + "%"
+                                    ]
+                                ]
+                            ]
+                        ];
+                        
+                        icons.forEach(i => {
+                            console.log(i[2]);
+                            let proba = i[2];
+                            proba.forEach(j => {
+                                console.log(j[0]);
+                            })
+                            ispisHTML += ` 
+                            <div class="info col-lg-4">
+                                <ion-icon name="${i[0]}" class="col-12 mx-auto"></ion-icon>
+                                <div class="infoText">
+                                    <h4 class="text-center my-4">${i[1]}</h4>
+                                    <div class="opis px-5">`
+                                    
+                                    i[2].forEach( j => {
+                                        ispisHTML += `<div class="d-flex"><ion-icon name="ellipse-outline" class="fs-6 mt-1 mr-3"></ion-icon><p class="">${j[0]}: <span> ${j[1]}</span<</p></div>`;
+                                    });
+                                    
+                                    ispisHTML+=`
+                                    </div>
+                                </div>
+                            </div>`
+                        });
+                        document.querySelector('#specificInfo').innerHTML = ispisHTML;
+                        
                     }
                  
                     

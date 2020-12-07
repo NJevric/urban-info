@@ -22,6 +22,9 @@ h2{
 h3{
     font-size:2.5em!important;
 }
+h4{
+    font-size:1.3em!important;
+}
 header{
     background-image: url('../img/home3.jpg');
     background-size: cover;
@@ -245,7 +248,7 @@ main #icons .cardIco p{
    
 }
 main #icons .cardIco:hover{
-    background-color: #fcfcfc;
+    background-color:#F2F1EF;
     color:#333;
 }
 main #icons .ico{
@@ -301,6 +304,16 @@ main #icons .ico{
 }
 #specificInfo .info ion-icon{
     font-size:48px;
+}
+#specificInfo .info .opis{
+    width: 95%;
+    margin:0px auto;
+}
+#specificInfo .info .opis ion-icon{
+    color:red;
+    background-color: #333;
+    border-radius: 10px;
+    
 }
 
 
