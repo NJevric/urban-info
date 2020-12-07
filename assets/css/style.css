@@ -519,4 +519,13 @@ footer .social a:hover{
     #icons .row{
              margin-right: 0px!important;
     }
+    .btn-lg {
+        padding: .25rem .5rem!important;
+        font-size: 1rem!important;
+        
+    }
+    #naslov article form .ispisGradova, main .ispisUrbanGradova {
+       
+        top: 37px;
+    }
 }

@@ -108,9 +108,9 @@ let searchCity = () => {
                 
                 let stilPrikazGradova = () => {
                     if(brEl<1){
-                        document.querySelector('.ispisGradova').style.display='none';
+                        document.querySelector('.ispisGradova').style.visibility='hidden';
                     }
-                    if(brEl<2){
+                    if(brEl==2){
                         document.querySelector('.ispisGradova').style.height='45px';
                     }
                     if(brEl>1 && brEl<3){
@@ -335,7 +335,7 @@ let icons = () => {
 let dynamicPrint = () => {
     let urbanIco = () => {
         try{
-            let html = `<div class="row text-center">`;
+            let html = `<div class="row text-center container mx-auto">`;
             let arr = [["airplane-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calculator-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calendar-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"]];
             arr.forEach(i => {
                 html+=`
