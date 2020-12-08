@@ -1,139 +1,219 @@
 window.onload=function(){
 
     try{
+        loadMap('mapa');
         dynamicPrint();
-        nav();
         searchCity();
-        loadInfo();
         infoCity()
         SignUpForm();
-        icons();
         urbanArea();
         ispisInformacijaUrbanGradova();
-       
-       
-       
-            
-            
-  
     }
     catch(err){
         console.log(err);
     }
 }
-    
-let loadInfo = () => {
-    console.log('a');
-    
-    document.querySelector('#grad').innerHTML=`   <div class="row  mx-auto">
-    <div class="col-lg-6 col-12 ">
-        <div class="col-12 mx-auto">
-            <h2 class="">City Name</h2>
-        </div> 
-        <div class="col-lg-12 mx-auto ">
-            <div class="col-lg-6 col-11 basicInfo mr-lg-5 mr-0">
-                
-                <p class="mb-4 opis text-left">- Name of searched city around the globe -</p>
-                <div class="textBasicInfo">
-                    <p>Country : <span> </span></p>
-                    <p>Division : <span>  </span></p>
-                    <p>Timezone : <span> </span></p>
-                    <div class="location">
-                        <p>Latitude : <span> </span></p>
-                        <p>Longitude : <span> </span></p>
-                    </div>
-                    <p>Population : <span> </span></p>   
-                </div>
-            </div>
+let stilPrikazGradovaLista = (sum,klasa) => {
+    if(sum<1){
+        document.querySelector(klasa).style.visibility='hidden';
+    }
+    if(sum == 1){
+        document.querySelector(klasa).style.height='45px';
+    }
+    if(sum==2){
+        document.querySelector(klasa).style.height='90px';
+    }
+    if(sum > 2){
+        document.querySelector(klasa).style.height='130px';
+    }
+}
+let klikNaGradLista = (klasa,elementVr,elementStil) => {
 
+    let myEl = document.getElementsByClassName(klasa);
+                  
+    for(let i=0;i<myEl.length;i++){
+        console.log(myEl[i]);
+        myEl[i].addEventListener('click',function(){
+            console.log(myEl[i]);
+            document.querySelector(elementVr).value = myEl[i].innerHTML;
+            document.querySelector(elementVr).dataset.id = myEl[i].dataset.id;
+            setTimeout(()=>{
+                document.querySelector(elementStil).style.visibility='hidden';
+            },100);
+        });
+
+    }
+
+}
+let klikIzvanGrad = (divEvent,divStyle) => {
+    document.querySelector(divEvent).addEventListener('blur',function(){
+        document.querySelector(divStyle).style.visibility='hidden';
+    });
+}
+let print = (div,inner) => {
+    return document.querySelector(div).innerHTML=inner;
+}
+let ajax = (success,address) => {
+    $.ajax({
+        url:address,
+        method:'get',
+        dataType: 'json',
+        success:success,
+        error: xhr => {
+            console.log(xhr);
+        }
+    });
+}
+
+let loadMap = (div) => {
+    
+    try{
+    
+        let mapa = new Datamap({
+            scope:'world',
+            element: document.getElementById(div),
+            projection: 'orthographic',
+            height:null,
+            width:null,
+            projectionConfig: {
+                rotation: [0,-20]
+            }, 
+        });
+    
+    }
+    catch(err){
+        console.log(err);
+    }
+
+}
+
+
+let dynamicPrint = () => {
+
+    let html = ``;
+
+    
+    
+    let urbanIco = () => {
+        
+        html = `<div class="row text-center container mx-auto mt-5">`;
+        let arr = [["airplane-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calculator-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calendar-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"]];
+
+        let printUrbanIco = (a,b) => {
+            return html +=` 
+            <div class="col-lg-4 col-11 cardIco p-5 ">
+                <ion-icon name="${a}" class="ico mx-auto pb-5"></ion-icon>
+                <p>${b}</p>
+            </div>`
+        }
+        
+        arr.forEach(i => {
+            printUrbanIco(i[0],i[1]);
             
-        </div>
-    </div>
-    <div class="col-lg-6 col-md-10 col-12 mx-auto mx-lg-0">
-        <div id="mapa"></div>
-    </div>
-</div>`;
+        });
 
-var mapa = new Datamap({
-    scope:'world',
-    element: document.getElementById("mapa"),
-    projection: 'orthographic',
-    height:null,
-    width:null,
-    projectionConfig: {
-        rotation: [0,-20]
-    }, 
-});
+        html+=`</div>`;
+    
+        print('#icons',html);
 
-
+    }
+    let social = () => {
       
+        html=``;
+        let arr = [["#","logo-linkedin"],["#","logo-github"],["#","logo-instagram"]];
+
+        let printSocial = (a,b) => {
+            return  html+=`<a href="${a}"><ion-icon name="${b}"></ion-icon></a>`;
+        }
+        arr.forEach(i => {
+            printSocial(i[0],i[1]);
+        });
+
+        print('.icons',html);
+    
+    }
+    let nav = () => {
+       
+        html =`<div class="container">
+        <ion-icon name="close-outline" class="escapeNav fs-1 float-right"></ion-icon>`
+        let arr = [["index.html","Home"],["#","Author"],["#","Documentation"]];
+
+        let printNav = (a,b) => {
+            return  html+=`<a class="nav-link outNav" aria-current="page" href="${a}">${b}</a>`
+        }
+        arr.forEach(i => {
+           printNav(i[0],i[1]);
+        });
+        html+=`</div>`;
+      
+        print('.openMenu',html);
+
+        let navOpenLogic = () => {
+    
+            document.querySelector('.menuIco').addEventListener('click',function(e){
+                e.preventDefault();
+                document.querySelector('.openMenu').style.display='block';
+            }) 
+        
+            document.querySelector('.escapeNav').addEventListener('click',function(e){
+                e.preventDefault();
+                document.querySelector('.openMenu').classList.add('closeMenu');
+                setTimeout(() => {
+                    document.querySelector('.openMenu').style.display='none';
+                    document.querySelector('.openMenu').classList.remove('closeMenu');
+                },300);
+            });
+            
+        }
+
+        navOpenLogic();
+    }
+    try{
+        urbanIco();
+        social();
+        nav();
+    }
+    catch(err){
+        console.log(err);
+    }  
+   
 }
 
 let searchCity = () => {
 
+    let arrKlase = ['#search','.ispisGradova','.grad'];
     try{
-        document.querySelector('#search').addEventListener('keyup',function(){
+      
 
-
-            let vrednost = document.querySelector('#search').value;
-            document.querySelector('.ispisGradova').style.visibility='visible';
+        document.querySelector(arrKlase[0]).addEventListener('keyup',function(){
+          
+            let vrednost = document.querySelector(arrKlase[0]).value;
+            document.querySelector(arrKlase[1]).style.visibility='visible';
             
-            $.ajax({
-                url: `https://api.teleport.org/api/cities/?search=${vrednost}`,
-                method: "get",
-                dataType: "json",
-                success: function (data) {
-                    
-                    // console.log(idGrad);
-                    ispisListe(data);
-                    
+            ajax(
+                data => {   
+                    ispisListe(data);    
                 },
-                error:function(xhr){
-                    console.log(xhr);
-                } 
-            });
-            
+                `https://api.teleport.org/api/cities/?search=${vrednost}`
+            )
+
             let ispisListe = (arg) => {
+
                 let brEl = arg._embedded["city:search-results"].length;
-                
                 let html = '';
               
                 for(let i=0;i<brEl;i++){
-                    
+
                     let vrednost = arg._embedded["city:search-results"][i].matching_full_name;
                     var idGrad = arg._embedded["city:search-results"][i]._links["city:item"].href.replace( /^\D+/g, '');
                     html+=`<p class="grad" data-id="${idGrad}">${vrednost}</p>`;   
                 }
-                document.querySelector('.ispisGradova').innerHTML=html;
+
+                print(arrKlase[1],html);
                 
-                let stilPrikazGradova = () => {
-                    if(brEl<1){
-                        document.querySelector('.ispisGradova').style.visibility='hidden';
-                    }
-                    if(brEl==2){
-                        document.querySelector('.ispisGradova').style.height='45px';
-                    }
-                    if(brEl>1 && brEl<3){
-                        document.querySelector('.ispisGradova').style.height='90px';
-                    }
-                }
-                stilPrikazGradova();
-                let klikNaGrad = () => {
-                    var myEl = document.getElementsByClassName('grad');
-                    
-                    
-                    for(let i=0;i<myEl.length;i++){
-                       myEl[i].addEventListener('click',function(){
-                           console.log(myEl[i]);
-                            document.querySelector('#search').value = myEl[i].innerHTML;
-                            document.querySelector('#search').dataset.id = myEl[i].dataset.id;
-                            setTimeout(()=>{
-                                document.querySelector('.ispisGradova').style.visibility='hidden';
-                            },100);
-                        });
-                    }
-                }
-                klikNaGrad();
+                stilPrikazGradovaLista(brEl,arrKlase[1]);
+
+                klikNaGradLista('grad',arrKlase[0],arrKlase[1]);
             }
             
             
@@ -142,10 +222,9 @@ let searchCity = () => {
     catch(err){
         console.log(err);
     }
+
     try{
-        document.querySelector('#search').addEventListener('blur',function(){
-            document.querySelector('.ispisGradova').style.visibility='hidden';
-        });
+        klikIzvanGrad(arrKlase[0],arrKlase[1]);
     }
     catch(err){
         console.log(err);
@@ -153,95 +232,88 @@ let searchCity = () => {
 }
 
 let infoCity = () => {
+
     try{
-       
-        
-        document.querySelector('#submit').addEventListener('click',(e) => {
-            
+           
+        document.querySelector('#submit').addEventListener('click', (e) => {
+
             e.preventDefault();
-            console.log(document.querySelector('#search').value);
+            
             let vrednost = document.querySelector('#search').dataset.id;
             let imeGrada = document.querySelector('#search').value;
-            console.log(vrednost);
+     
             if(imeGrada!=""){
+
                 window.scrollTo({
                     top:850,
                     left:0,
                     behavior: 'smooth'
                 });
+
             }
             else{
-                alert('Niste uneli grad');
+                alert('You didnt enter city name');
             }
-            $.ajax({
-                url: `https://api.teleport.org/api/cities/geonameid%3A${vrednost}`,
-                method: "get",
-                dataType: "json",
-                success: function (data) {
+            
+            ajax(
+                data => {
                     console.log(data);
                     ispisGradInfo(data);
                     ispisMape(data);
-                },
-                error:function(xhr){
-                    console.log(xhr);
-                } 
-            });
+                }, 
+                `https://api.teleport.org/api/cities/geonameid%3A${vrednost}`
+            )
+
             let ispisMape = (arr) => {
+
                 function okret(){
+
                     let okret = 0;
-                    if(arr.location.latlon.longitude<-50){
-                        return okret = 80;
+                    let cityLongitude = arr.location.latlon.longitude;
+
+                    if(cityLongitude<-50){
+                         okret = 80;
                     }
-                    if(arr.location.latlon.longitude<0 && arr.location.latlon.longitude>-50){
-                        return okret = 0;
+                    if(cityLongitude<0 && cityLongitude>-50){
+                         okret = 0;
                     }
               
-                    if(arr.location.latlon.longitude>0 && arr.location.latlon.longitude<50){
-                        return okret = 0;
+                    if(cityLongitude>0 && cityLongitude<50){
+                         okret = 0;
                     }
-                    if(arr.location.latlon.longitude>50){
-                        return okret = -80;
+                    if(cityLongitude>50){
+                         okret = -80;
                     }
-                    
-                
-                    
+                    return okret;
+
                 }
-                console.log(arr);
-                var mapa = new Datamap({
+                let mapa = new Datamap({
                     scope:'world',
                     element: document.getElementById("mapa"),
                     projection: 'orthographic',
-                    // geographyConfig: {
-                    //     popupOnHover: false,
-                    //     highlightOnHover: true
-                    // },
                     projectionConfig: {
                         rotation: [okret(),-20]
                     },
                     
                     fills: {
                         defaultFill: '#ABDDA4',
-                        USA: '#333',
+                        grad: '#333',
                     }
                 });
                 
                 mapa.bubbles([
-                {
-                    name: '',
-                    radius: 7,
-                    country: 'USA',
-                    yeild: 0,
-                    fillKey: 'USA',
-                    date: '1954-03-01',
-                    latitude: arr.location.latlon.latitude,
-                    longitude: arr.location.latlon.longitude
-                },
-                
-                
+                    {
+                        name: '',
+                        radius: 7,
+                        country: 'grad',
+                        yeild: 0,
+                        fillKey: 'grad',
+                        latitude: arr.location.latlon.latitude,
+                        longitude: arr.location.latlon.longitude
+                    },
                 ]);
-        
-                
             }
+
             let ispisGradInfo = (x) => {
                 let html = `
                 <div class="row">
@@ -272,8 +344,8 @@ let infoCity = () => {
                         <div id="mapa"></div>
                     </div>
                 </div>`;
-                
-                document.querySelector('#grad').innerHTML=html;
+
+                print('#grad',html);
             }
         });
     }
@@ -283,277 +355,138 @@ let infoCity = () => {
 }
 
 let SignUpForm = () => {
+
     let openSignForm = () => {
 
-        try{
-            document.querySelector('#openSignUpForm').addEventListener('click',function(e){
-                e.preventDefault();
-                if(true){
-                    console.log('kliknuto');
-                    document.querySelector('#createAccForm').style.display='block';
-                }
-                
-             
-            });
-        }
-        catch(err){
-            console.log(err.message);
-        }
+        document.querySelector('#openSignUpForm').addEventListener('click',function(e){
+            e.preventDefault();
+            if(true){
+                console.log('kliknuto');
+                document.querySelector('#createAccForm').style.display='block';
+            }
+            
+            
+        });
        
     }
-    openSignForm();
+   
     let escapeSignForm = () => {
-        try{
-            document.querySelector('.escape').addEventListener('click',function(e){
-                e.preventDefault();
-                if(true){
-                    console.log('kliknuto');
-                    document.querySelector('#createAccForm').classList.add('closeForm');
-                    setTimeout(() => {
-                        document.querySelector('#createAccForm').style.display='none';
-                        document.querySelector('#createAccForm').classList.remove('closeForm');
-                    },300);
-                    
-                }
-            });
-        }
-        catch(err){
-            console.log(err.message);
-        }
-    }
-    escapeSignForm();
-}
-let icons = () => {
-    try{
-
-    }
-    catch(err){
-        console.log(err);
-    }
-}
-
-let dynamicPrint = () => {
-    let urbanIco = () => {
-        try{
-            let html = `<div class="row text-center container mx-auto mt-5">`;
-            let arr = [["airplane-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calculator-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calendar-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"]];
-            arr.forEach(i => {
-                html+=`
-                <div class="col-lg-4 col-11 cardIco p-5 ">
-                    <ion-icon name="${i[0]}" class="ico mx-auto pb-5"></ion-icon>
-                    <p>${i[1]}</p>
-                </div>
-            `
-            });
-            html+=`</div>`;
-            document.querySelector('#icons').innerHTML=html;
-        }
-        catch(err){
-           console.log(err);
-        }
-    }
-    urbanIco();
-    let social = () => {
-        try{
-            let html=``;
-            let arr = [["#","logo-linkedin"],["#","logo-github"],["#","logo-instagram"]];
-            arr.forEach(i => {
-                html+=`<a href="${i[0]}"><ion-icon name="${i[1]}"></ion-icon></a>`;
-            });
     
-            document.querySelector('.icons').innerHTML=html;
-        }
-        catch(err){
-            console.log(err);
-        }
-    }
-    social();
-    let nav = () => {
-        try{
-            let html =`<div class="container">
-            <ion-icon name="close-outline" class="escapeNav fs-1 float-right"></ion-icon>`
-            let arr = [["index.html","Home"],["#","Author"],["#","Documentation"]];
-            arr.forEach(i => {
-                html+=`<a class="nav-link outNav" aria-current="page" href="${i[0]}">${i[1]}</a>`
-            });
-            html+=`</div>`;
-            document.querySelector('.openMenu').innerHTML=html;
-        }
-        catch(err){
-            console.log(err);
-        }
-    }
-    nav();
-}
-let nav = () => {
-    try{
-        
-        document.querySelector('.menuIco').addEventListener('click',function(e){
+        document.querySelector('.escape').addEventListener('click',function(e){
             e.preventDefault();
-            console.log('kliknuto');
-            document.querySelector('.openMenu').style.display='block';
-        })
-
-        document.querySelector('.escapeNav').addEventListener('click',function(e){
-            e.preventDefault();
-            document.querySelector('.openMenu').classList.add('closeMenu');
-            setTimeout(() => {
-                document.querySelector('.openMenu').style.display='none';
-                document.querySelector('.openMenu').classList.remove('closeMenu');
-            },300);
+            if(true){
+                console.log('kliknuto');
+                document.querySelector('#createAccForm').classList.add('closeForm');
+                setTimeout(() => {
+                    document.querySelector('#createAccForm').style.display='none';
+                    document.querySelector('#createAccForm').classList.remove('closeForm');
+                },300);
+                
+            }
         });
     }
+    try{
+        openSignForm();
+        escapeSignForm();
+    }
     catch(err){
         console.log(err);
     }
-
 }
+
 let urbanArea = () => {
+
     try{
+
         document.querySelector('#searchUrbanCity').addEventListener('keyup',function(){
+
             let vrednost = document.querySelector('#searchUrbanCity').value;
             document.querySelector('.ispisUrbanGradova').style.visibility='visible';
 
-            $.ajax({
-               url: `https://api.teleport.org/api/urban_areas/`,
-               method: "get",
-               dataType: "json",
-               success: function (data) {
-                      
-                   ispisUrbanGradova(data);
+            ajax(
+                function (data) {
+                    ispisUrbanGradova(data);
+                },
+                `https://api.teleport.org/api/urban_areas/`
+            );
+        
+            let ispisUrbanGradova = (x) => {
 
-               },
-               error:function(xhr){
-                   console.log(xhr);
-               } 
-           });
-           let ispisUrbanGradova = (x) => {
-   
-               let linkovi = x._links["ua:item"];
-               let imenaGradova=``;
+                let linkovi = x._links["ua:item"];
+                let imenaGradova=``;
 
-               linkovi.forEach(i => {
-
-                   imenaGradova +=i.name.toLowerCase() + " ";
-
-               });
-              
-               arr = imenaGradova.split(" ");
-               
-               let searchValue = document.querySelector('#searchUrbanCity').value.toLowerCase();
-               
-               let searchFilter = arr.filter(x=>x.indexOf(searchValue)!=-1);
-               let ispis=``;
-               searchFilter.forEach(i=>{
+                linkovi.forEach(i => {
+                    imenaGradova +=i.name.toLowerCase() + " ";
+                });
                 
-                ispis += `<p class="urbanGrad" data-id="${i}">${i}</p>`;
-             
-               });
+                arr = imenaGradova.split(" ");
+                
+                let searchValue = document.querySelector('#searchUrbanCity').value.toLowerCase();
+                
+                let searchFilter = arr.filter(x=>x.indexOf(searchValue)!=-1);
+                let ispis=``;
 
-               brEl = searchFilter.length;
-               document.querySelector('.ispisUrbanGradova').innerHTML=ispis;
-           
-               let stilPrikazGradova = () => {
-                   
-                   if(brEl<1 || document.querySelector('#searchUrbanCity').value==""){
-                       document.querySelector('.ispisUrbanGradova').style.visibility='hidden';
-                   }
-                   if(brEl<2){
-                       document.querySelector('.ispisUrbanGradova').style.height='45px';
-                       console.log(brEl);
-                   }
-                   if(brEl>1 && brEl<3){
-                       document.querySelector('.ispisUrbanGradova').style.height='90px';
-                   }
-               }
-               stilPrikazGradova();
-               let klikNaGrad = () => {
-                   var myEl = document.getElementsByClassName('urbanGrad');
-                   
-                   
-                   for(let i=0;i<myEl.length;i++){
-                      myEl[i].addEventListener('click',function(){
-                          console.log(myEl[i]);
-                           document.querySelector('#searchUrbanCity').value = myEl[i].innerHTML;
-                           document.querySelector('#searchUrbanCity').dataset.id = myEl[i].dataset.id;
-                           setTimeout(()=>{
-                               document.querySelector('.ispisUrbanGradova').style.visibility='hidden';
-                           },100);
-                       });
-                   }
-               }
-               klikNaGrad();
+                searchFilter.forEach(i=>{
+                
+                    ispis += `<p class="urbanGrad" data-id="${i}">${i}</p>`;
+                
+                });
+
+                brEl = searchFilter.length;
+    
+                print('.ispisUrbanGradova',ispis);
+            
+                stilPrikazGradovaLista(brEl,'.ispisUrbanGradova');
+
+                klikNaGradLista('urbanGrad','#searchUrbanCity','.ispisUrbanGradova');
             }
         });
-      
-        
     }
+
     catch(err){
         console.log(err);
     }
+
     try{
-        document.querySelector('#searchUrbanCity').addEventListener('blur',function(){
-            document.querySelector('.ispisUrbanGradova').style.visibility='hidden';
-        });
+        klikIzvanGrad('#searchUrbanCity','.ispisUrbanGradova')
     }
+
     catch(err){
         console.log(err);
     }
+
 }
+
 let ispisInformacijaUrbanGradova = () => {
+
     document.querySelector('#submitUrban').addEventListener('click',function(e){
 
         e.preventDefault();
-        // console.log(document.querySelector('#searchUrbanCity').value);
         let vrednost = document.querySelector('#searchUrbanCity').dataset.id;
-        console.log(vrednost);
 
-        ispisSlika = () =>{
-            $.ajax({
-                url: `https://api.teleport.org/api/urban_areas/slug%3A${vrednost}/images/`,
-                method: "get",
-                dataType: "json",
-                success: function (data) {
-                    console.log(data.photos[0].image.mobile);
-                    // console.log(data.)
+        let ispisSlika = () =>{
+            ajax(
+                function (data) {
                     ispis(data);
-                    
                 },
-                error:function(xhr){
-                    console.log(xhr);
-                } 
-            });
+                `https://api.teleport.org/api/urban_areas/slug%3A${vrednost}/images/`
+            );
+            
             let ispis = (arr) =>{
-        
                 let html=``;
-                // console.log(arr);
-       
-                    html=`<img src=${arr.photos[0].image.mobile} alt="${vrednost}" class="img-fluid float-right"/>`;
-                    document.querySelector('.slika').innerHTML=html;
-                
-          
-               
-                
+                html=`<img src=${arr.photos[0].image.mobile} alt="${vrednost}" class="img-fluid float-right"/>`;
+                document.querySelector('.slika').innerHTML=html;  
             }
            
         }
         ispisBasicUrbanInfo = () => {
-            $.ajax({
-                url: `https://api.teleport.org/api/urban_areas/slug%3A${vrednost}/`,
-                method: "get",
-                dataType: "json",
-                success: function (data) {
-                 
-                    console.log(data.full_name);
-                    ispis(data);
-              
-                    
-                },
-                error:function(xhr){
-                    console.log(xhr);
-                } 
-            });
             
+            ajax(
+                function (data) {
+                    ispis(data);
+                },
+                `https://api.teleport.org/api/urban_areas/slug%3A${vrednost}/`
+            )
             let html=``;
             
             ispis = (arr) => {
@@ -568,24 +501,14 @@ let ispisInformacijaUrbanGradova = () => {
                 // <p>Mayor : <span> ${arr.mayor} </span></p>
                 document.querySelector('.text').innerHTML=html;
                 ispisDetails = () =>{
-                 
-                    $.ajax({
-                        url: `https://api.teleport.org/api/urban_areas/slug%3A${vrednost}/details`,
-                        method: "get",
-                        dataType: "json",
-                        success: function (data) {
-                            console.log(data);
-                            console.log(data.categories);
-                            console.log(data.categories[0].id);
-                            // console.log(data.categories[11].data[2].string_value);
+                    ajax(
+                        function (data) {
                             ispisBasic(data);
                             ispisDetail(data);
                         },
-                        error:function(xhr){
-                            console.log(xhr);
-                        } 
-                    });
-                    // <p>Native Language : <span> ${arr.categories[11].data[2].string_value} </span></p>`
+                        `https://api.teleport.org/api/urban_areas/slug%3A${vrednost}/details`
+                    )
+                    
                     ispisBasic = (arr) => {
 
                         let ispisHtml =``;
@@ -611,6 +534,7 @@ let ispisInformacijaUrbanGradova = () => {
                         `;
                         document.querySelector('.lista').innerHTML+=ispisHtml;
                     }
+
                     ispisDetail = (arr) => {
                         console.log('proba');
                         let ispisHTML =``;
@@ -718,22 +642,18 @@ let ispisInformacijaUrbanGradova = () => {
 
                 ispisDetails();
                 
-               
             }
             ispisScores = () =>{
-                $.ajax({
-                    url: `https://api.teleport.org/api/urban_areas/slug%3A${vrednost}/scores/`,
-                    method: "get",
-                    dataType: "json",
-                    success: function (data) {
+
+                ajax(
+                    function (data) {
                      
-                       console.log(data.categories);
-                        ispis(data.categories);
-                    },
-                    error:function(xhr){
-                        console.log(xhr);
-                    } 
-                });
+                        console.log(data.categories);
+                         ispis(data.categories);
+                     },
+                     `https://api.teleport.org/api/urban_areas/slug%3A${vrednost}/scores/`
+                )
+    
                 let ispis = (arr) => {
                     const max = '10';
                     let html = `<div class="row">`;
@@ -752,29 +672,19 @@ let ispisInformacijaUrbanGradova = () => {
                     });
                     html+=`</div>`
                     document.querySelector('#scores').innerHTML=html;
-
-                    // let a = () => {
-                    //     let arr = [1,2,3];
-                    //     let ispis=``;
-                    //     for(let i=0;i<arr.length;i++){
-                    //         console.log(i);
-                    //         ispis+=`<div class="a"> </div>`
-                    //         console.log(ispis);
-                            
-                    //     }
-                    //     document.querySelector('#appearance').innerHTML = ispis;
-                        
-                    // }
-                    // a();
                    
                 }
             }
         }
 
-        
-        ispisSlika();
-        ispisBasicUrbanInfo();
-        ispisScores();
+        try{
+            ispisSlika();
+            ispisBasicUrbanInfo();
+            ispisScores();
+        }
+        catch(err){
+            console.log(err);
+        }
     });
     
 
