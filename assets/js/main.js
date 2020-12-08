@@ -605,7 +605,7 @@ let ispisInformacijaUrbanGradova = () => {
                         <p>Native Language : <span> ${language} </span></p>
                         <p>Currency : <span> ${arr.categories[5].data[0].string_value} </span></p>
                         <p>Population : <span> ${arr.categories[1].data[0].float_value} milion</span></p>
-                        <p>GDP growth : <span> ${arr.categories[5].data[2].percent_value} %</span></p>
+                        <p>GDP growth : <span> ${arr.categories[5].data[2].percent_value.toFixed(2)} %</span></p>
                         <p>Best Univeristy : <span> ${arr.categories[6].data[educationUniversity].string_value} (rank: ${arr.categories[6].data[educationUniversityRank].int_value})</span></p>
                         <p>Weather Type : <span> ${arr.categories[2].data[arr.categories[2].data.length-1].string_value}</span></p>
                         `;
@@ -650,23 +650,23 @@ let ispisInformacijaUrbanGradova = () => {
                                 
                                 ]
                             ],
-                            ["alert-outline", skrati[15].id + ' (0-10)',
+                            ["alert-outline", skrati[15].id + ' (0-1)',
                                 [
                                     [
                                         "Air Pollution",
-                                        skrati[15].data[0].float_value
+                                        skrati[15].data[0].float_value.toFixed(2)
                                     ],
                                     [
                                         "Cleanliness",
-                                        skrati[15].data[1].float_value
+                                        skrati[15].data[1].float_value.toFixed(2)
                                     ],
                                     [
                                         "Drinking Watter Quality",
-                                        skrati[15].data[2].float_value
+                                        skrati[15].data[2].float_value.toFixed(2)
                                     ],
                                     [
                                         "Greenery",
-                                        skrati[15].data[3].float_value
+                                        skrati[15].data[3].float_value.toFixed(2)
                                     ]
                                 ]
                             ],
@@ -680,10 +680,6 @@ let ispisInformacijaUrbanGradova = () => {
                                     [
                                         "Median Age",
                                         skrati[9].data[2].float_value
-                                    ],
-                                    [
-                                        "Unemployment Rate",
-                                        skrati[9].data[3].percent_value + "%"
                                     ]
                                 ]
                             ]
@@ -701,7 +697,7 @@ let ispisInformacijaUrbanGradova = () => {
                                 <ion-icon name="${i[0]}" class="col-12 mx-auto"></ion-icon>
                                 <div class="infoText">
                                     <h4 class="text-center my-4">${i[1]}</h4>
-                                    <div class="opis px-5">`
+                                    <div class="opis mx-auto text-center">`
                                     
                                     i[2].forEach( j => {
                                         ispisHTML += `<div class="d-flex aa"><ion-icon name="ellipse-outline" class="fs-6 mt-1 mr-3"></ion-icon><p class="">${j[0]}: <span> ${j[1]}</span<</p></div>`;

@@ -306,15 +306,15 @@ main #icons .ico{
 #specificInfo .info ion-icon{
     font-size:48px;
 }
-#specificInfo .info .opis{
-    width: 95%;
-    margin:0px auto;
-}
+
 #specificInfo .info .opis ion-icon{
     color:red;
     background-color: #333;
     border-radius: 10px;
     
+}
+.aa{
+    padding-left: 50px;
 }
 #scores .score p{
     font-size:.9em;
@@ -428,8 +428,9 @@ footer .social a:hover{
         padding: 20px 0px;
      
     }
+    
     .aa{
-        justify-content: center;
+       padding-left:150px;
     }
     /* #mapa svg{
         
@@ -437,6 +438,15 @@ footer .social a:hover{
         text-align: justify;
         float: left;
     } */
+}
+@media screen and (max-width:768px){
+    .aa{
+        padding-left:70px;
+     }
+     #specificInfo {
+        /* margin-bottom: 100px; */
+        margin:0px auto 100px auto;
+    }
 }
 @media screen and (max-width:415px){
     #mapa{
