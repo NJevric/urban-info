@@ -335,7 +335,7 @@ let icons = () => {
 let dynamicPrint = () => {
     let urbanIco = () => {
         try{
-            let html = `<div class="row text-center container mx-auto">`;
+            let html = `<div class="row text-center container mx-auto mt-5">`;
             let arr = [["airplane-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calculator-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calendar-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"]];
             arr.forEach(i => {
                 html+=`
