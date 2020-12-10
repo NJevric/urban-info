@@ -73,7 +73,7 @@ let submitSignUp = () => {
         let regPassword = /^.{5,60}$/;
         let errors = [];
 
-        if(!name.match(regName)){
+        if(!name.trim().match(regName)){
             if(name == ""){
                 error[0].innerHTML = 'First Name field is mandatory';
                 error[0].classList.add('provera');
@@ -84,7 +84,7 @@ let submitSignUp = () => {
             }
             errors.push(1);
         }
-        if(!lastName.match(regName)){
+        if(!lastName.trim().match(regName)){
             if(lastName == ""){
                 error[1].innerHTML = 'Last Name field is mandatory';
                 error[1].classList.add('provera');
