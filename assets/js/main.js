@@ -1,9 +1,6 @@
 window.onload=function(){
-
-     
     try{
         
-        // setTimeout(animacija(),1000);
         animacija();
         loadMap('mapa');
         dynamicPrint();
@@ -22,6 +19,7 @@ window.onload=function(){
     }
 }
 
+// JQUERY LOADER PLUGIN
 let animacija = () => {
     $('#myLoader').Loading({
         height: 16, // height
@@ -45,7 +43,7 @@ let animacija = () => {
         $('.loader').css('display','none');
       },2200);
 }
-
+// END OF JQUERY PLUGIN
 let styleProveraPodatakaForma = (div) => {
     let provera = document.getElementsByClassName(div);
             
@@ -306,7 +304,7 @@ let dynamicPrint = () => {
        
         html =`<div class="container">
         <ion-icon name="close-outline" class="escapeNav fs-1 float-right"></ion-icon>`
-        let arr = [["index.html","Home"],["author.html","Author"],["documentation.pdf","Documentation"]];
+        let arr = [["index.html","Home"],["author.html","Author"],["dokumentacija.pdf","Documentation"]];
 
         let printNav = (a,b) => {
             return  html+=`<a class="nav-link outNav" aria-current="page" href="${a}">${b}</a>`
