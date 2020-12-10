@@ -413,8 +413,15 @@ footer .social a:hover{
     transition:.7s ease;
 }
 
-
-
+#author{
+    height: 100vh;
+}
+.about{
+    margin-top:50px;
+    color:#333;
+    background-color: #fff;
+    padding:10px;
+}
 
 @media screen and (max-width:1280px){
    
