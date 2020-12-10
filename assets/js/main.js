@@ -267,7 +267,7 @@ let dynamicPrint = () => {
     let urbanIco = () => {
         
         html = `<div class="row text-center container mx-auto mt-5">`;
-        let arr = [["airplane-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calculator-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"],["calendar-outline","Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi alias dolorum recusandae facilis nisi saepe?"]];
+        let arr = [["airplane-outline","You are going on  a business trip. Find out more about where will you spend some time"],["calculator-outline","You are interested in how pricy are other places so you can prepare well"],["calendar-outline","You are planning a tourist trip and you want to prepare and inform yourself as much as possible"]];
 
         let printUrbanIco = (a,b) => {
             return html +=` 
@@ -306,7 +306,7 @@ let dynamicPrint = () => {
        
         html =`<div class="container">
         <ion-icon name="close-outline" class="escapeNav fs-1 float-right"></ion-icon>`
-        let arr = [["index.html","Home"],["#","Author"],["#","Documentation"]];
+        let arr = [["index.html","Home"],["author.html","Author"],["documentation.pdf","Documentation"]];
 
         let printNav = (a,b) => {
             return  html+=`<a class="nav-link outNav" aria-current="page" href="${a}">${b}</a>`
