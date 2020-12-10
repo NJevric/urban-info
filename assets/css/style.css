@@ -423,6 +423,12 @@ footer .social a:hover{
     padding:10px;
 }
 
+@media screen and (max-width:1366px){
+    .about img{
+        width:50%;
+        padding:0px;
+    }
+}
 @media screen and (max-width:1280px){
    
     #specificInfo .info ion-icon {
