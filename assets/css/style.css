@@ -389,6 +389,32 @@ footer .social a:hover{
     border-radius:50px;
     
 }
+.provera{
+    position: absolute;
+    width:97%;
+    height:38px;
+    border-radius: 5px;
+    /* visibility:hidden; */
+    color:#fff;
+    padding-top:10px;
+    text-align: center;
+    background:#D24D57;
+    
+}
+
+.loader{
+    position:fixed;
+    top:0px;
+    left:0px;
+    width: 100vw;
+    height:100vh;
+    background-color: #000;
+    display: block;
+    transition:.7s ease;
+}
+
+
+
 
 @media screen and (max-width:1280px){
    
